@@ -58,7 +58,8 @@ func (a *IPAllocator) Get(id string, ifname string, requestedIP net.IP) (*curren
 			return nil, err
 		}
 
-		if requestedIP.Equal(r.Gateway) {
+		//Allow static pod to be the gateway
+		if requestedIP.Equal(r.Gateway) && r.StaticStart == nil {
 			return nil, fmt.Errorf("requested ip %s is subnet's gateway", requestedIP.String())
 		}
 

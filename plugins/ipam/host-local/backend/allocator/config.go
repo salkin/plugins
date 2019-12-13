@@ -20,7 +20,7 @@ import (
 	"net"
 
 	"github.com/containernetworking/cni/pkg/types"
-	"github.com/containernetworking/cni/pkg/types/020"
+	types020 "github.com/containernetworking/cni/pkg/types/020"
 )
 
 // The top-level network config - IPAM plugins are passed the full configuration
@@ -63,10 +63,12 @@ type IPAMArgs struct {
 type RangeSet []Range
 
 type Range struct {
-	RangeStart net.IP      `json:"rangeStart,omitempty"` // The first ip, inclusive
-	RangeEnd   net.IP      `json:"rangeEnd,omitempty"`   // The last ip, inclusive
-	Subnet     types.IPNet `json:"subnet"`
-	Gateway    net.IP      `json:"gateway,omitempty"`
+	RangeStart  net.IP      `json:"rangeStart,omitempty"`  // The first ip, inclusive
+	RangeEnd    net.IP      `json:"rangeEnd,omitempty"`    // The last ip, inclusive
+	StaticStart net.IP      `json:"staticStart,omitempty"` //Static ippool also allowed
+	StaticEnd   net.IP      `json:"staticEnd,omitempty"`
+	Subnet      types.IPNet `json:"subnet"`
+	Gateway     net.IP      `json:"gateway,omitempty"`
 }
 
 // NewIPAMConfig creates a NetworkConfig from the given network name.

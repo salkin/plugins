@@ -105,6 +105,17 @@ func (r *Range) Contains(addr net.IP) bool {
 		return false
 	}
 
+	// check inside static pool
+	if r.StaticStart != nil {
+		if ip.Cmp(addr, r.StaticStart) >= 0 {
+			if r.StaticEnd != nil {
+				if ip.Cmp(addr, r.StaticEnd) <= 0 {
+					return true
+				}
+			}
+		}
+	}
+
 	// We ignore nils here so we can use this function as we initialize the range.
 	if r.RangeStart != nil {
 		// Before the range start
